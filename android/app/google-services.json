@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017033647939",
+    "project_id": "remote-config-532db",
+    "storage_bucket": "remote-config-532db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017033647939:android:e5d83c4a81e9f7592b71f6",
+        "android_client_info": {
+          "package_name": "mannlex.demo_firebase_config"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017033647939-ptvv6ordkp8mnkjhsg0oiffusqad6ina.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF_EKswknBH4MCw8PLon-zMD-Km4vfzko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017033647939-ptvv6ordkp8mnkjhsg0oiffusqad6ina.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
