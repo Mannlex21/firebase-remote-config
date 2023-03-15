@@ -38,28 +38,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Business',
-      style: optionStyle,
-    ),
-    Text(
-      'School',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   void initState() {
@@ -70,32 +48,68 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     RemoteConfigService remoteConfig = RemoteConfigService();
     ThemeFirebase? themeFirebase = remoteConfig.getTheme();
+    var scaffoldKey = GlobalKey<ScaffoldState>();
+    TextStyle optionStyle = TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+        color: HexColor(themeFirebase?.theme.surface900.value ?? ''));
+    List<Widget> _widgetOptions = <Widget>[
+      Text(
+        'Home',
+        style: optionStyle,
+      ),
+      Text(
+        'Business',
+        style: optionStyle,
+      ),
+      Text(
+        'School',
+        style: optionStyle,
+      ),
+    ];
+
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+
     return Scaffold(
+      key: scaffoldKey,
       drawer: NavBar(),
-      backgroundColor: HexColor(themeFirebase?.theme.background.value ?? ''),
+      backgroundColor: HexColor(themeFirebase?.theme.surfaceGround.value ?? ''),
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          tooltip: 'Open drawer',
+          color: HexColor(themeFirebase?.theme.textColor.value ?? ''),
+          onPressed: () {
+            scaffoldKey.currentState?.openDrawer();
+          },
+        ),
         backgroundColor:
-            HexColor(themeFirebase?.theme.colorPrimary.value ?? ''),
+            HexColor(themeFirebase?.theme.surfaceOverlay.value ?? ''),
         title: Text(
           'GNP',
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color:
-                  HexColor(themeFirebase?.theme.colorTextPrimary.value ?? '')),
+              color: HexColor(themeFirebase?.theme.primaryColor.value ?? '')),
         ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.remove_red_eye),
             tooltip: 'Show Snackbar',
+            color: HexColor(themeFirebase?.theme.textColor.value ?? ''),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: const Text('This is a snackbar'),
-                  backgroundColor: HexColor(
-                      themeFirebase?.theme.colorTextPrimary.value ?? '')));
+                  backgroundColor:
+                      HexColor(themeFirebase?.theme.textColor.value ?? '')));
             },
           ),
           IconButton(
             icon: const Icon(Icons.navigate_next),
+            color: HexColor(themeFirebase?.theme.textColor.value ?? ''),
             tooltip: 'Go to the next page',
             onPressed: () {
               Navigator.push(context, MaterialPageRoute<void>(
@@ -103,13 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Scaffold(
                     appBar: AppBar(
                       backgroundColor: HexColor(
-                          themeFirebase?.theme.colorPrimary.value ?? ''),
+                          themeFirebase?.theme.primaryColor.value ?? ''),
                       title: Text(
                         'Next page',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: HexColor(
-                                themeFirebase?.theme.colorTextPrimary.value ??
+                                themeFirebase?.theme.primaryColorText.value ??
                                     '')),
                       ),
                     ),
@@ -134,7 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
             _widgetOptions.elementAt(_selectedIndex),
             remoteConfig.isBannerVisible()
                 ? Card(
-                    elevation: 9,
+                    color:
+                        HexColor(themeFirebase?.theme.surfaceCard.value ?? ''),
                     child: Padding(
                       padding: const EdgeInsets.all(50),
                       child: Text(
@@ -145,8 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                             fontSize: 30,
                             color: HexColor(
-                                themeFirebase?.theme.colorTextSecondary.value ??
-                                    '')),
+                                themeFirebase?.theme.textColor.value ?? '')),
                       ),
                     ),
                   )
@@ -155,25 +169,33 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             label: 'Home',
+            backgroundColor:
+                HexColor(themeFirebase?.theme.textColor.value ?? ''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: const Icon(Icons.business),
             label: 'Business',
+            backgroundColor:
+                HexColor(themeFirebase?.theme.textColor.value ?? ''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: const Icon(Icons.school),
             label: 'School',
+            backgroundColor:
+                HexColor(themeFirebase?.theme.textColor.value ?? ''),
           ),
         ],
         currentIndex: _selectedIndex,
         unselectedItemColor:
-            HexColor(themeFirebase?.theme.colorSecondary.value ?? ''),
+            HexColor(themeFirebase?.theme.textColor.value ?? ''),
         selectedItemColor:
-            HexColor(themeFirebase?.theme.colorPrimary.value ?? ''),
+            HexColor(themeFirebase?.theme.primaryColor.value ?? ''),
+        backgroundColor:
+            HexColor(themeFirebase?.theme.surfaceOverlay.value ?? ''),
         onTap: _onItemTapped,
       ),
     );
